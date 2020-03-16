@@ -66,6 +66,11 @@ endif
 if !exists('g:nerdtree_tabs_autofind')
   let g:nerdtree_tabs_autofind = 0
 endif
+
+" Use NerdTreeToggleVCS if set
+if !exists('g:nerdtree_tabs_vcs')
+  let g:nerdtree_tabs_vcs = 0
+endif
 "
 " }}}
 " === plugin mappings === {{{
@@ -113,7 +118,11 @@ fun! s:NERDTreeMirrorOrCreate()
     " if the window count of current tab didn't increase after NERDTreeMirror,
     " it means NERDTreeMirror was unsuccessful and a new NERDTree has to be created
     if l:previous_winnr == winnr("$")
-      silent NERDTreeToggle
+      if g:nerdtree_tabs_vcs
+        silent NERDTreeToggleVCS
+      else
+        silent NERDTreeToggle
+      endif
     endif
   endif
 endfun
